@@ -24,7 +24,47 @@ Content-Type: application/json
 ###
 @token = {{ authentication.response.body.token }}
 
+
 ###
 GET {{ BASE_URL }}/api/auth/me
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+GET {{ BASE_URL }}/api/posts
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+POST {{ BASE_URL }}/api/posts
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "title": "Hello World",
+  "body": "My Father Goes To The Market With Donkey ..."
+}
+
+
+###
+GET {{ BASE_URL }}/api/posts/1
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+PUT {{ BASE_URL }}/api/posts/1
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "title": "Fuck You"
+}
+
+
+###
+DELETE {{ BASE_URL }}/api/posts/1
 Content-Type: application/json
 Authorization: Bearer {{ token }}
