@@ -1,0 +1,30 @@
+@BASE_URL = http://127.0.0.1:8000
+
+####
+POST {{ BASE_URL }}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "asj214@naver.com",
+  "name": "sjahn",
+  "password": "rewq1234"
+}
+
+
+####
+# @name authentication
+POST {{ BASE_URL }}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "asj214@naver.com",
+  "password": "rewq1234"
+}
+
+###
+@token = {{ authentication.response.body.token }}
+
+###
+GET {{ BASE_URL }}/api/auth/me
+Content-Type: application/json
+Authorization: Bearer {{ token }}
