@@ -68,3 +68,35 @@ Authorization: Bearer {{ token }}
 DELETE {{ BASE_URL }}/api/posts/1
 Content-Type: application/json
 Authorization: Bearer {{ token }}
+
+
+###
+GET {{ BASE_URL }}/api/posts/26/comments
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+POST {{ BASE_URL }}/api/posts/26/comments
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "body": "this is comment with api"
+}
+
+
+###
+PUT {{ BASE_URL }}/api/posts/26/comments/1
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "body": "modify comment"
+}
+
+
+###
+DELETE {{ BASE_URL }}/api/posts/26/comments/2
+Content-Type: application/json
+Authorization: Bearer {{ token }}

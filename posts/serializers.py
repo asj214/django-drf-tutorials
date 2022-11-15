@@ -1,6 +1,32 @@
 from rest_framework import serializers
 from users.serializers import UserSerializer
 from .models import Post
+from comments.models import Comment
+
+
+class PostCommentSerializer(serializers.ModelSerializer):
+  user = UserSerializer(read_only=True)
+  body = serializers.CharField()
+
+  class Meta:
+    model = Comment
+    fields = (
+      'id',
+      'user',
+      'body',
+      'created_at',
+      'updated_at'
+    )
+
+  def create(self, validated_data):
+    post_id = self.context.pop('post_id')
+    user = self.context.pop('user')
+
+    post = Post.objects.get(pk=post_id)
+    return post.comments.create(
+      user=user,
+      **validated_data
+    )
 
 
 class PostSerializer(serializers.ModelSerializer):
