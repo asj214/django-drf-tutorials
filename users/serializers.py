@@ -24,6 +24,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     fields = (
       'email',
       'name',
+      'password',
       'last_login',
       'created_at',
       'updated_at'
