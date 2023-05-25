@@ -54,3 +54,16 @@ class CategorySerializer(serializers.ModelSerializer):
       })
 
     return ret
+
+
+class CategoryRelationSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Category
+    fields = (
+      'id',
+      'parent',
+      'name',
+      'depth',
+      'order',
+      'is_published',
+    )

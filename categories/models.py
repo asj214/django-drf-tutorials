@@ -25,6 +25,12 @@ class Category(BaseModel, SoftDeleteModel):
   order = models.IntegerField('순서', default=0)
   is_published = models.BooleanField('공개 여부', default=False, db_index=True)
 
+  product = models.ManyToManyField(
+    'products.Product',
+    db_constraint=False,
+    related_name='categories'
+  )
+
   class Meta:
     db_table = 'categories'
     ordering = ['parent__id', 'order']

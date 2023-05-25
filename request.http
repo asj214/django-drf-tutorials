@@ -137,3 +137,24 @@ Authorization: Bearer {{ token }}
 {
   "name": "Cate 2"
 }
+
+
+###
+GET {{ BASE_URL }}/api/products
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+
+###
+POST {{ BASE_URL }}/api/products
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "category_ids": [1],
+  "name": "Category 1, Product 12",
+  "price": 15000,
+  "description": "This is a Product",
+  "is_published": true
+}

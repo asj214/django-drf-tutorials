@@ -14,13 +14,7 @@ class Product(BaseModel, SoftDeleteModel):
   name = models.CharField('상품명', max_length=200)
   price = models.DecimalField(max_digits=10, decimal_places=2)
   description = models.TextField('상품 설명')
-
-  categories = models.ManyToManyField(
-    'categories.Category',
-    on_delete=models.DO_NOTHING,
-    db_constraint=False,
-    related_name='products'
-  )
+  is_published = models.BooleanField('공개 여부', default=False, db_index=True)
 
   class Meta:
     db_table = 'products'
