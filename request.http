@@ -100,3 +100,40 @@ Authorization: Bearer {{ token }}
 DELETE {{ BASE_URL }}/api/posts/26/comments/2
 Content-Type: application/json
 Authorization: Bearer {{ token }}
+
+
+###
+GET {{ BASE_URL }}/api/categories
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+
+###
+POST {{ BASE_URL }}/api/categories
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "parent": 3,
+  "name": "Cate 1 Child 1, Grand Child 1",
+  "depth": 2,
+  "order": 1,
+  "is_published": true
+}
+
+
+###
+GET {{ BASE_URL }}/api/categories/1
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+PATCH {{ BASE_URL }}/api/categories/2
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "name": "Cate 2"
+}
