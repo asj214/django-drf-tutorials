@@ -25,17 +25,28 @@ class CategorySerializer(serializers.ModelSerializer):
 
   def create(self, validated_data):
     user = self.context.pop('user')
-    return Category.objects.create(
+    c = Category.objects.create(
       user=user,
       **validated_data
     )
+    self.category_change_trigger()
+    return c
 
   def update(self, instance, validated_data):
     for (key, value) in validated_data.items():
       setattr(instance, key, value)
 
     instance.save()
+    self.category_change_trigger()
     return instance
+
+  def category_change_trigger(self):
+    # 추후 redis 고도화
+    # 전체 카테고리 path 정리
+    for c in Category.objects.all():
+      path = c.get_children_ids()
+      c.path = path
+      c.save()
 
   def generate_categories(self, rows: list, parent_id=None, depth=0):
     ret = []

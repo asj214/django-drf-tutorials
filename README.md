@@ -20,4 +20,7 @@ python manage.py runserver_plus
 ```sh
 # shell
 python manage.py shell_plus
+
+# run scripts/categories.py 
+python manage.py runscript categories
 ```

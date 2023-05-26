@@ -135,7 +135,7 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-  "name": "Cate 2"
+  "name": "Category No.2"
 }
 
 
@@ -152,9 +152,26 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
-  "category_ids": [1],
+  "category_ids": [1, 2],
   "name": "Category 1, Product 12",
   "price": 15000,
   "description": "This is a Product",
   "is_published": true
+}
+
+###
+GET {{ BASE_URL }}/api/products/2
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+PUT {{ BASE_URL }}/api/products/2
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "category_ids": [1, 2],
+  "name": "Product Modify",
+  "price": 27000
 }

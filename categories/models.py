@@ -22,6 +22,7 @@ class Category(BaseModel, SoftDeleteModel):
     null=True,
     related_name='categories'
   )
+  path = models.JSONField(default=list)
   order = models.IntegerField('순서', default=0)
   is_published = models.BooleanField('공개 여부', default=False, db_index=True)
 
@@ -30,6 +31,13 @@ class Category(BaseModel, SoftDeleteModel):
     db_constraint=False,
     related_name='categories'
   )
+
+  def get_children_ids(self):
+    ret = [self.id]
+    for c in self.__class__.objects.filter(parent_id=self.id).all():
+      ret = ret + c.get_children_ids()
+
+    return ret
 
   class Meta:
     db_table = 'categories'
