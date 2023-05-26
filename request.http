@@ -175,3 +175,9 @@ Authorization: Bearer {{ token }}
   "name": "Product Modify",
   "price": 27000
 }
+
+###
+GET {{ BASE_URL }}/api/categories/2/products
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+

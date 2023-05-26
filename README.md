@@ -15,9 +15,12 @@ python manage.py migrate
 python manage.py runserver_plus
 ```
 
-### commands
+### commands (django-extensions)
 
 ```sh
+# route url list
+python manage.py show_urls
+
 # shell
 python manage.py shell_plus
 

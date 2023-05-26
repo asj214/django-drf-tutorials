@@ -1,9 +1,11 @@
-from rest_framework import status, viewsets
+from rest_framework import status, generics, viewsets
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from .models import Category
 from .serializers import CategorySerializer
+from products.models import Product
+from products.serializers import ProductSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -64,3 +66,22 @@ class CategoryViewSet(viewsets.ModelViewSet):
     category.delete()
 
     return Response(status=status.HTTP_204_NO_CONTENT)
+  
+
+class CategoryProductList(generics.ListCreateAPIView):
+  permission_classes = [AllowAny]
+  serializer_class = ProductSerializer
+  queryset = Product.objects.prefetch_related('categories', 'user').all()
+
+  def get_queryset(self, category_id):
+    qs = self.queryset
+    category = Category.objects.get(id=category_id)
+    qs = qs.filter(categories__id__in=category.path)
+
+    return qs
+
+  def list(self, request, category_id, *args, **kwargs):
+    page = self.paginate_queryset(self.get_queryset(category_id))
+    serializer = self.get_serializer(page, many=True)
+    return self.get_paginated_response(serializer.data)
+  
