@@ -63,7 +63,7 @@ class CategoryRelationSerializer(serializers.ModelSerializer):
       'id',
       'parent',
       'name',
-      'depth',
-      'order',
-      'is_published',
+      # 'depth',
+      # 'order',
+      # 'is_published',
     )

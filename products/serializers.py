@@ -1,4 +1,4 @@
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from rest_framework import serializers
 from users.serializers import UserSerializer
 from categories.models import Category
@@ -36,21 +36,34 @@ class ProductSerializer(serializers.ModelSerializer):
   def create(self, validated_data):
     user = self.context.pop('user')
     category_ids = validated_data.pop('category_ids', [])
-    with transaction.atomic():
-      product = Product.objects.create(
-        user=user,
-        **validated_data
-      )
 
-      for category in Category.objects.filter(id__in=category_ids).all():
-        product.categories.add(category)
+    try:
+      with transaction.atomic():
+        product = Product.objects.create(
+          user=user,
+          **validated_data
+        )
+        categories = Category.objects.filter(id__in=category_ids).all()
+        product.categories.add(*categories)
 
-      # raise Exception("Something went wrong")
-      return product
+        return product
+
+    except IntegrityError:
+      raise Exception("Something went wrong")
 
   def update(self, instance, validated_data):
-    for (key, value) in validated_data.items():
-      setattr(instance, key, value)
+    category_ids = validated_data.pop('category_ids', [])
+    try:
+      with transaction.atomic():
+        for (key, value) in validated_data.items():
+          setattr(instance, key, value)
+        instance.save()
 
-    instance.save()
-    return instance
+        categories = Category.objects.filter(id__in=category_ids).all()
+        instance.categories.clear()
+        instance.categories.add(*categories)
+        return instance
+    except IntegrityError:
+      raise Exception("Something went wrong")
+
+    
