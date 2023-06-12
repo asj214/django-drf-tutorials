@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.contenttypes.fields import GenericRelation
 from conf.models import BaseModel, SoftDeleteModel
 
 
