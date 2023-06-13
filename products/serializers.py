@@ -66,4 +66,19 @@ class ProductSerializer(serializers.ModelSerializer):
     except IntegrityError:
       raise Exception("Something went wrong")
 
-    
+
+class ProductRelateSerializer(serializers.ModelSerializer):
+  categories = CategoryRelationSerializer(read_only=True, many=True)
+
+  class Meta:
+    model = Product
+    fields = (
+      'id',
+      'name',
+      'price',
+      'description',
+      'is_published',
+      'categories',
+      'created_at',
+      'updated_at'
+    )

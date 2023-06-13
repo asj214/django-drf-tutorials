@@ -1,15 +1,19 @@
+from django.db.models import Prefetch
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from .models import Order
+from .models import Order, OrderProduct
 from .serializers import OrderSerializer
 
 
 class OrderViewSet(viewsets.ModelViewSet):
   permission_classes = [IsAuthenticatedOrReadOnly]
   serializer_class = OrderSerializer
-  queryset = Order.objects.prefetch_related('user', 'products').all()
+  queryset = Order.objects.prefetch_related(
+    'user',
+    Prefetch('orderproduct_set', queryset=OrderProduct.objects.all(), to_attr='order_products')
+  ).all()
 
   def get_queryset(self):
     return self.queryset
@@ -29,6 +33,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     context = {
       'user': request.user,
     }
+
     serializer = self.serializer_class(
       data=request.data,
       context=context,

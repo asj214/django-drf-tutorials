@@ -181,3 +181,26 @@ GET {{ BASE_URL }}/api/categories/2/products
 Content-Type: application/json
 Authorization: Bearer {{ token }}
 
+
+###
+GET {{ BASE_URL }}/api/orders
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+POST {{ BASE_URL }}/api/orders
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "cart": [
+    {"id": 2, "qty": 3},
+    {"id": 3, "qty": 3}
+  ]
+}
+
+###
+GET {{ BASE_URL }}/api/orders/1
+Content-Type: application/json
+Authorization: Bearer {{ token }}
