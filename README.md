@@ -27,3 +27,5 @@ python manage.py shell_plus
 # run scripts/categories.py 
 python manage.py runscript categories
 ```
+
+커밋 테스트
